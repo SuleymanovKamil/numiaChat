@@ -18,6 +18,7 @@ final class ChatTableView: UITableView {
          return refreshControl
      }()
     
+    
     // MARK: - Properties
     
     var messages: Messages? {
