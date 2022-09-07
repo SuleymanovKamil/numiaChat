@@ -11,21 +11,27 @@ protocol ChatScreenProtocol: AnyObject {
     func fetchMessages(offset: Int) async
 }
 
-final class ChatController: ChatScreenProtocol {
-
+final class ChatController {
+    
+    //MARK: - Properties
+    
     let chatService: ChatService
     let view: ChatScreen
+    
+    //MARK: - Init
     
     init(view: ChatScreen, chatService: ChatService) {
         self.view = view
         self.chatService = chatService
     }
     
-   @MainActor func fetchMessages(offset: Int) async {
+}
+
+extension ChatController: ChatScreenProtocol {
+    @MainActor func fetchMessages(offset: Int) async {
         let result = await chatService.fetchMessages(offset: offset)
         switch result {
         case .success(let data):
-            print(data)
             await view.updateView(data.result)
         case .failure(let error):
             print(#function, error.localizedDescription)
@@ -34,3 +40,4 @@ final class ChatController: ChatScreenProtocol {
     }
     
 }
+

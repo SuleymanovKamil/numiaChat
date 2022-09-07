@@ -52,7 +52,7 @@ class ChatScreenViewController: UIViewController {
         view.addSubview(chatTableView)
         chatTableView.translatesAutoresizingMaskIntoConstraints = false
         chatTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        chatTableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 0).isActive = true
+        chatTableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 8).isActive = true
         chatTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         chatTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
