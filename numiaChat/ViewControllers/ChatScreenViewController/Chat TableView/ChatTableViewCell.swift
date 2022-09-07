@@ -38,8 +38,9 @@ final class ChatTableViewCell: UITableViewCell  {
     }
    
     private func setData(_ message: MessageViewModel) {
-        messageView.chatLabel.text = message.message
-        messageView.incoming = message.incoming
+        messageView.messageLabel.text = message.message
+        messageView.isIncoming = message.incoming
+        messageView.timeLabel.text = Date().toString(time: .medium)
         leadingOrTrailingConstraint.isActive = false
         contentView.addSubview(messageView)
         messageView.translatesAutoresizingMaskIntoConstraints = false

@@ -8,28 +8,48 @@
 import UIKit
 
 final class ChatBubbleView: UIView {
+    
+    //MARK: - Views
+    
     let bubbleLayer = CAShapeLayer()
-    let chatLabel: UILabel = {
+    let messageLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
     }()
-    var incoming = false
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12, weight: .medium)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    //MARK: - Properties
+    
+    var isIncoming = false
 
+    //MARK: - Lifecycle
+    
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         setupConstraints()
     }
 
+    //MARK: - Setups
+    
     private func setupConstraints() {
         layer.addSublayer(bubbleLayer)
-        addSubview(chatLabel)
+        addSubview(messageLabel)
+        addSubview(timeLabel)
         
-        chatLabel.translatesAutoresizingMaskIntoConstraints = false
-        chatLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12.0).isActive = true
-        chatLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12.0).isActive = true
-        chatLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0).isActive = true
-        chatLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0).isActive = true
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12.0).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: timeLabel.topAnchor, constant: -12.0).isActive = true
+        messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0).isActive = true
+        messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0).isActive = true
+        
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12.0).isActive = true
     }
 
     override func layoutSubviews() {
@@ -38,7 +58,7 @@ final class ChatBubbleView: UIView {
         let height = bounds.size.height
         let bezierPath = UIBezierPath()
         
-        switch incoming {
+        switch isIncoming {
         case true:
             bezierPath.move(to: CGPoint(x: 22, y: height))
             bezierPath.addLine(to: CGPoint(x: width - 17, y: height))
@@ -53,6 +73,8 @@ final class ChatBubbleView: UIView {
             bezierPath.addCurve(to: CGPoint(x: 11.04, y: height - 4.04), controlPoint1: CGPoint(x: 4.07, y: height + 0.43), controlPoint2: CGPoint(x: 8.16, y: height - 1.06))
             bezierPath.addCurve(to: CGPoint(x: 22, y: height), controlPoint1: CGPoint(x: 16, y: height), controlPoint2: CGPoint(x: 19, y: height))
             bezierPath.close()
+            
+            timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0).isActive = true
         case false:
             bezierPath.move(to: CGPoint(x: width - 22, y: height))
             bezierPath.addLine(to: CGPoint(x: 17, y: height))
@@ -67,9 +89,11 @@ final class ChatBubbleView: UIView {
             bezierPath.addCurve(to: CGPoint(x: width - 11.04, y: height - 4.04), controlPoint1: CGPoint(x: width - 4.07, y: height + 0.43), controlPoint2: CGPoint(x: width - 8.16, y: height - 1.06))
             bezierPath.addCurve(to: CGPoint(x: width - 22, y: height), controlPoint1: CGPoint(x: width - 16, y: height), controlPoint2: CGPoint(x: width - 19, y: height))
             bezierPath.close()
+            
+            timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0).isActive = true
         }
     
-        bubbleLayer.fillColor = incoming ? UIColor.secondarySystemFill.cgColor : UIColor.secondaryLabel.cgColor
+        bubbleLayer.fillColor = isIncoming ? UIColor.secondarySystemFill.cgColor : UIColor.secondaryLabel.cgColor
         bubbleLayer.path = bezierPath.cgPath
     }
 }

@@ -8,6 +8,6 @@
 import Foundation
 
 struct MessageViewModel {
-    var incoming: Bool = false
-    var message: String = ""
+    let incoming: Bool
+    let message: String
 }

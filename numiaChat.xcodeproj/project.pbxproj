@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B683F1128C930AC00B2B4AF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B683F1028C930AC00B2B4AF /* Date.swift */; };
 		6B84403128C8F78B006EF39B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403028C8F78B006EF39B /* AppDelegate.swift */; };
 		6B84403328C8F78B006EF39B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403228C8F78B006EF39B /* SceneDelegate.swift */; };
 		6B84403528C8F78B006EF39B /* ChatScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403428C8F78B006EF39B /* ChatScreenViewController.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B683F1028C930AC00B2B4AF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		6B84402D28C8F78B006EF39B /* numiaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = numiaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B84403028C8F78B006EF39B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B84403228C8F78B006EF39B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B683F0F28C9309F00B2B4AF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6B683F1028C930AC00B2B4AF /* Date.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		6B84402428C8F78B006EF39B = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +236,7 @@
 		6B84407928C901F9006EF39B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				6B683F0F28C9309F00B2B4AF /* Extensions */,
 				6B84407A28C9020F006EF39B /* Protocols */,
 				6B84406928C8FCA1006EF39B /* Persistence */,
 			);
@@ -353,6 +364,7 @@
 				6B84405E28C8FC5D006EF39B /* Endpoint.swift in Sources */,
 				6B84403328C8F78B006EF39B /* SceneDelegate.swift in Sources */,
 				6B84406528C8FC5D006EF39B /* RequestError.swift in Sources */,
+				6B683F1128C930AC00B2B4AF /* Date.swift in Sources */,
 				6B84406128C8FC5D006EF39B /* API.swift in Sources */,
 				6B84407528C8FEF9006EF39B /* ChatTableViewCell.swift in Sources */,
 				6B84407828C90042006EF39B /* Messages.swift in Sources */,
