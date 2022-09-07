@@ -10,7 +10,6 @@
 		6B84403128C8F78B006EF39B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403028C8F78B006EF39B /* AppDelegate.swift */; };
 		6B84403328C8F78B006EF39B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403228C8F78B006EF39B /* SceneDelegate.swift */; };
 		6B84403528C8F78B006EF39B /* ChatScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403428C8F78B006EF39B /* ChatScreenViewController.swift */; };
-		6B84403B28C8F78B006EF39B /* numiaChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403928C8F78B006EF39B /* numiaChat.xcdatamodeld */; };
 		6B84403D28C8F78C006EF39B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B84403C28C8F78C006EF39B /* Assets.xcassets */; };
 		6B84404028C8F78C006EF39B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B84403E28C8F78C006EF39B /* LaunchScreen.storyboard */; };
 		6B84404928C8FA62006EF39B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84404828C8FA62006EF39B /* Router.swift */; };
@@ -27,6 +26,8 @@
 		6B84408028C9080E006EF39B /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84407F28C9080E006EF39B /* ChatController.swift */; };
 		6B84408328C90955006EF39B /* ChatEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84408228C90955006EF39B /* ChatEndpoint.swift */; };
 		6B84408628C90A73006EF39B /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84408528C90A73006EF39B /* ChatService.swift */; };
+		6B84408828C913D4006EF39B /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84408728C913D4006EF39B /* ChatBubbleView.swift */; };
+		6B84408A28C91981006EF39B /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84408928C91981006EF39B /* MessageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +35,6 @@
 		6B84403028C8F78B006EF39B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B84403228C8F78B006EF39B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6B84403428C8F78B006EF39B /* ChatScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScreenViewController.swift; sourceTree = "<group>"; };
-		6B84403A28C8F78B006EF39B /* numiaChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = numiaChat.xcdatamodel; sourceTree = "<group>"; };
 		6B84403C28C8F78C006EF39B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B84403F28C8F78C006EF39B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B84404128C8F78C006EF39B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,6 +52,8 @@
 		6B84407F28C9080E006EF39B /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		6B84408228C90955006EF39B /* ChatEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEndpoint.swift; sourceTree = "<group>"; };
 		6B84408528C90A73006EF39B /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		6B84408728C913D4006EF39B /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
+		6B84408928C91981006EF39B /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,17 +175,8 @@
 		6B84406928C8FCA1006EF39B /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				6B84406A28C8FCCB006EF39B /* CoreData Service */,
 			);
 			path = Persistence;
-			sourceTree = "<group>";
-		};
-		6B84406A28C8FCCB006EF39B /* CoreData Service */ = {
-			isa = PBXGroup;
-			children = (
-				6B84403928C8F78B006EF39B /* numiaChat.xcdatamodeld */,
-			);
-			path = "CoreData Service";
 			sourceTree = "<group>";
 		};
 		6B84406B28C8FD2A006EF39B /* Model */ = {
@@ -216,6 +209,7 @@
 			children = (
 				6B84407228C8FDF2006EF39B /* ChatTableView.swift */,
 				6B84407428C8FEF9006EF39B /* ChatTableViewCell.swift */,
+				6B84408728C913D4006EF39B /* ChatBubbleView.swift */,
 			);
 			path = "Chat TableView";
 			sourceTree = "<group>";
@@ -224,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				6B84407728C90042006EF39B /* Messages.swift */,
+				6B84408928C91981006EF39B /* MessageViewModel.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -347,8 +342,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B84403B28C8F78B006EF39B /* numiaChat.xcdatamodeld in Sources */,
 				6B84406428C8FC5D006EF39B /* HTTPClient.swift in Sources */,
+				6B84408A28C91981006EF39B /* MessageViewModel.swift in Sources */,
 				6B84403528C8F78B006EF39B /* ChatScreenViewController.swift in Sources */,
 				6B84406328C8FC5D006EF39B /* HTTPMethod.swift in Sources */,
 				6B84404928C8FA62006EF39B /* Router.swift in Sources */,
@@ -361,6 +356,7 @@
 				6B84406128C8FC5D006EF39B /* API.swift in Sources */,
 				6B84407528C8FEF9006EF39B /* ChatTableViewCell.swift in Sources */,
 				6B84407828C90042006EF39B /* Messages.swift in Sources */,
+				6B84408828C913D4006EF39B /* ChatBubbleView.swift in Sources */,
 				6B84407328C8FDF2006EF39B /* ChatTableView.swift in Sources */,
 				6B84408028C9080E006EF39B /* ChatController.swift in Sources */,
 				6B84407C28C90222006EF39B /* Configurable.swift in Sources */,
@@ -574,19 +570,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6B84403928C8F78B006EF39B /* numiaChat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6B84403A28C8F78B006EF39B /* numiaChat.xcdatamodel */,
-			);
-			currentVersion = 6B84403A28C8F78B006EF39B /* numiaChat.xcdatamodel */;
-			path = numiaChat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 6B84402528C8F78B006EF39B /* Project object */;
 }

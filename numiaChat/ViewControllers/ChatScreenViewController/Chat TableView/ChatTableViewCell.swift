@@ -17,9 +17,11 @@ final class ChatTableViewCell: UITableViewCell  {
     
     //MARK: - Properties
     
-    private lazy var message: UILabel = {
-        let label = UILabel()
-        return label
+    var leadingOrTrailingConstraint = NSLayoutConstraint()
+    private lazy var messageView: ChatBubbleView = {
+        let view = ChatBubbleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     //MARK: - Lifecycle
@@ -27,7 +29,6 @@ final class ChatTableViewCell: UITableViewCell  {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         setupInterface()
-        setupConstraints()
     }
     
     //MARK: - Setups
@@ -36,13 +37,22 @@ final class ChatTableViewCell: UITableViewCell  {
         contentView.backgroundColor = .systemBackground
     }
    
-    private func setupConstraints() {
-        contentView.addSubview(message)
-        message.translatesAutoresizingMaskIntoConstraints = false
-        message.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        message.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        message.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-        message.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8).isActive = true
+    private func setData(_ message: MessageViewModel) {
+        messageView.chatLabel.text = message.message
+        messageView.incoming = message.incoming
+        leadingOrTrailingConstraint.isActive = false
+        contentView.addSubview(messageView)
+        messageView.translatesAutoresizingMaskIntoConstraints = false
+        messageView.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, multiplier: 0.66).isActive = true
+        messageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12.0).isActive = true
+        messageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.0).isActive = true
+        switch message.incoming {
+        case true:
+            leadingOrTrailingConstraint = messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
+        case false:
+            leadingOrTrailingConstraint = messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12.0)
+        }
+        leadingOrTrailingConstraint.isActive = true
     }
     
 }
@@ -57,7 +67,8 @@ extension ChatTableViewCell: Configurable {
     }
     
     func configure(with model: Model) {
-        message.text = model.message
+        setData(MessageViewModel(incoming: true, message: model.message))
     }
     
 }
+

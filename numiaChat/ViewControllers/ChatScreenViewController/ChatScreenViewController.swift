@@ -32,10 +32,15 @@ class ChatScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupInterface()
         setupConstraints()
         Task {
             await controller?.fetchMessages(offset: 0)
         }
+    }
+    
+    private func setupInterface() {
+        view.backgroundColor = .systemBackground
     }
 
     private func setupConstraints() {
