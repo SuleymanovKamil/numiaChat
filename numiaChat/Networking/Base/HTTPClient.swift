@@ -53,11 +53,6 @@ extension HTTPClient {
                 print("need authorization token")
                 return .failure(.unauthorised)
             default:
-                guard let decodedResponse = try? JSONDecoder().decode(Response<String>.self, from: data) else {
-                    return .failure(.unexpectedStatusCode)
-                }
-                
-                print(decodedResponse)
                 return .failure(.unexpectedStatusCode)
             }
             

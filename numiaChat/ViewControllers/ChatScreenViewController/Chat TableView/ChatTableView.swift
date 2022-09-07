@@ -21,7 +21,7 @@ final class ChatTableView: UITableView {
     
     // MARK: - Properties
     
-    var messages: Messages? {
+    var messages: [String]? {
         didSet {
             reloadData()
         }
@@ -67,12 +67,12 @@ final class ChatTableView: UITableView {
 }
 extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messages?.result.count ?? 0
+        messages?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as! ChatTableViewCell
-        if let message = messages?.result[indexPath.row] {
+        if let message = messages?[indexPath.row] {
             cell.configure(with: ChatTableViewCell.Model(message: message, avatarURL: nil, messageDate: nil))
         }
         return cell

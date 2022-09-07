@@ -26,10 +26,15 @@ final class ChatTableViewCell: UITableViewCell  {
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
+        setupInterface()
         setupConstraints()
     }
     
     //MARK: - Setups
+    
+    private func setupInterface() {
+        contentView.backgroundColor = .systemBackground
+    }
    
     private func setupConstraints() {
         contentView.addSubview(message)
