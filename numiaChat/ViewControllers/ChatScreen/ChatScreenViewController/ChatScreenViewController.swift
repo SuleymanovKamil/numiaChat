@@ -30,11 +30,35 @@ class ChatScreenViewController: UIViewController {
         tableView.chatTableViewDelegate = self
         return tableView
     }()
+    private lazy var textViewContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .secondarySystemBackground
+        return view
+    }()
+    private lazy var textView: DynamicalTextView = {
+        let textView = DynamicalTextView()
+        textView.delegate = self
+        textView.placeholder = "Сообщение"
+        textView.backgroundColor = .systemBackground
+        textView.layer.cornerRadius = 8
+        textView.layer.borderColor = UIColor.placeholderText.cgColor
+        textView.layer.borderWidth = 0.5
+        textView.font = .systemFont(ofSize: 16, weight: .regular)
+        return textView
+    }()
+    private lazy var sendButton: UIButton = {
+        let button = UIButton()
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24)
+        button.setImage(UIImage(systemName: "arrow.up.circle.fill", withConfiguration: configuration), for: .normal)
+        button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInterface()
         setupConstraints()
+        setupKeyboardObservers()
         Task {
             await presenter?.fetchMessages(offset: 0)
         }
@@ -46,16 +70,49 @@ class ChatScreenViewController: UIViewController {
 
     private func setupConstraints() {
         view.addSubview(screenTitle)
+        view.addSubview(chatTableView)
+        view.addSubview(textViewContainer)
+        textViewContainer.addSubview(textView)
+        textViewContainer.addSubview(sendButton)
+        
         screenTitle.translatesAutoresizingMaskIntoConstraints = false
-        screenTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        screenTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         screenTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         
-        view.addSubview(chatTableView)
         chatTableView.translatesAutoresizingMaskIntoConstraints = false
-        chatTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        chatTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         chatTableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 8).isActive = true
-        chatTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        chatTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        chatTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        chatTableView.bottomAnchor.constraint(equalTo: textViewContainer.topAnchor, constant: 0).isActive = true
+        
+        textViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        textViewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        textViewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        textViewContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        textView.topAnchor.constraint(equalTo: textViewContainer.topAnchor, constant: 8).isActive = true
+        textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -8).isActive = true
+        textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        sendButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+    }
+    
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    //MARK: - Actions
+    
+    @objc private func sendMessage() {
+        textView.text = ""
+        textView.resignFirstResponder()
     }
 
 }
@@ -81,4 +138,26 @@ extension ChatScreenViewController: ChatTableViewProtocol {
         }
     }
     
+}
+
+//MARK: - UITextViewDelegate
+
+extension ChatScreenViewController: UITextViewDelegate{
+    
+}
+
+extension ChatScreenViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
 }
