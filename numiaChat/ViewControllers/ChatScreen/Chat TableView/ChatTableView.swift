@@ -33,7 +33,10 @@ final class ChatTableView: UITableView {
     var messages: [String]? {
         didSet {
             reloadData()
-            scrollToBottom()
+            Timer.scheduledTimer(withTimeInterval: 0.23, repeats: false) { [weak self] timer in
+                timer.invalidate()
+                self?.scrollToBottom()
+            }
         }
     }
 
@@ -60,7 +63,6 @@ final class ChatTableView: UITableView {
     
     private func setupInterface() {
         separatorStyle = .none
-        keyboardDismissMode = .onDrag
         showsVerticalScrollIndicator = true
         backgroundColor = .systemBackground
     }
