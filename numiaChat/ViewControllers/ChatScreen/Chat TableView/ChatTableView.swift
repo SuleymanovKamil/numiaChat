@@ -30,7 +30,7 @@ final class ChatTableView: UITableView {
     
     // MARK: - Properties
     
-    var messages: [String]? {
+    var messages: [MessageViewModel] = [] {
         didSet {
             reloadData()
             Timer.scheduledTimer(withTimeInterval: 0.23, repeats: false) { [weak self] timer in
@@ -80,14 +80,13 @@ final class ChatTableView: UITableView {
 }
 extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messages?.count ?? 0
+        messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as! ChatTableViewCell
-        if let message = messages?[indexPath.row] {
-            cell.configure(with: ChatTableViewCell.Model(message: message, avatarURL: "", messageDate: Date().toString(time: .medium)))
-        }
+        cell.configure(with: ChatTableViewCell.Model(message: messages[indexPath.row]))
+        
         return cell
     }
     

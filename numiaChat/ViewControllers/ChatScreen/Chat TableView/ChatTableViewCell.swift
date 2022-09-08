@@ -64,13 +64,11 @@ extension ChatTableViewCell: Configurable {
     typealias Model = ChatTableViewCellModel
     
     struct ChatTableViewCellModel {
-        let message: String
-        let avatarURL: String
-        let messageDate: String
+        let message: MessageViewModel
     }
     
     func configure(with model: Model) {
-        setData(MessageViewModel(incoming: true, message: model.message, date: model.messageDate))
+        setData(model.message)
     }
     
 }

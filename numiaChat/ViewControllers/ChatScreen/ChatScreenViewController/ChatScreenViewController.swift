@@ -112,7 +112,7 @@ class ChatScreenViewController: UIViewController {
     
     @objc private func sendMessage() {
         if let message = textView.text, !message.trimmingCharacters(in: .whitespaces).isEmpty {
-            chatTableView.messages?.append(message)
+            chatTableView.messages.append(MessageViewModel(incoming: false, message: message, date: Date().toString(time: .short)))
         }
         textView.text = ""
         textView.resignFirstResponder()
@@ -124,7 +124,7 @@ class ChatScreenViewController: UIViewController {
 
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
-        chatTableView.messages = messages
+        chatTableView.messages =  messages.map({ MessageViewModel(incoming: false, message: $0, date: Date().toString(time: .short)) })
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }
