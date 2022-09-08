@@ -7,13 +7,22 @@
 
 import UIKit
 
+protocol ChatTableViewProtocol: AnyObject {
+    func showMessageDetail()
+    func refreshData() 
+}
+
 final class ChatTableView: UITableView {
+    
+    // MARK: - Delegate
+    
+    weak var chatTableViewDelegate: ChatTableViewProtocol?
      
      // MARK: - Views
      
      private lazy var customRefreshControl: UIRefreshControl = {
          let refreshControl = UIRefreshControl()
-         refreshControl.tintColor = .systemBackground
+         refreshControl.tintColor = .brown
          refreshControl.addTarget(self, action: #selector(refreshControlAction), for: .valueChanged)
          return refreshControl
      }()
@@ -62,6 +71,7 @@ final class ChatTableView: UITableView {
     // MARK: - RefreshControl action
     
     @objc private func refreshControlAction() {
+        chatTableViewDelegate?.refreshData()
         customRefreshControl.endRefreshing()
     }
 }

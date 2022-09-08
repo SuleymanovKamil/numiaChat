@@ -27,6 +27,7 @@ class ChatScreenViewController: UIViewController {
     }()
     private lazy var chatTableView: ChatTableView = {
         let tableView = ChatTableView()
+        tableView.chatTableViewDelegate = self
         return tableView
     }()
     
@@ -59,8 +60,25 @@ class ChatScreenViewController: UIViewController {
 
 }
 
+//MARK: - ChatScreen Methods
+
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
         chatTableView.messages = messages
     }
+}
+
+//MARK: - ChatTableViewProtocol
+
+extension ChatScreenViewController: ChatTableViewProtocol {
+    func showMessageDetail() {
+        
+    }
+    
+    func refreshData() {
+        Task {
+            await presenter?.fetchMessages(offset: 0)
+        }
+    }
+    
 }

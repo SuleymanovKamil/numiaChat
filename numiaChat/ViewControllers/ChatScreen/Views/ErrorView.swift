@@ -16,6 +16,7 @@ final class ErrorView: UIView {
         view.layer.borderColor = UIColor.placeholderText.cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 16
+        view.backgroundColor = .systemBackground
         view.layer.masksToBounds = true
         return view
     }()
