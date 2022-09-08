@@ -29,11 +29,14 @@ final class ChatPresenter {
 
 extension ChatPresenter: ChatScreenProtocol {
     @MainActor func fetchMessages(offset: Int) async {
+        view.showLoading()
         let result = await chatService.fetchMessages(offset: offset)
         switch result {
         case .success(let data):
             await view.updateView(data.result)
+            view.hideLoading()
         case .failure(let error):
+            view.hideLoading()
             view.showInternetRequestErrorView(with: ErrorView.ErrorViewModel(errorMessage: error.localizedDescription, doneButtonTitle: "Подтвердить", cancelButtonTitle: "Отмена", doneButtonAction: { [weak self] in
                 Task {
                     await self?.fetchMessages(offset: offset)

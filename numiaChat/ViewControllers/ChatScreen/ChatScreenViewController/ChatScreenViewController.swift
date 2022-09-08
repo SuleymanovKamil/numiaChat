@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ChatScreen: AnyObject, EmptyStateProtocol {
+protocol ChatScreen: AnyObject, EmptyStateProtocol, Loadable {
     func updateView(_ messages: [String]) async
 }
 
