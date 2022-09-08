@@ -54,7 +54,7 @@ final class ChatBubbleView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let width = bounds.size.width
+        let width = bounds.size.width + 80
         let height = bounds.size.height
         let bezierPath = UIBezierPath()
         

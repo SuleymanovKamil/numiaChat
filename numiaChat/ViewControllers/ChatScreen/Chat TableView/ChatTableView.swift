@@ -33,6 +33,7 @@ final class ChatTableView: UITableView {
     var messages: [String]? {
         didSet {
             reloadData()
+            scrollToBottom()
         }
     }
 

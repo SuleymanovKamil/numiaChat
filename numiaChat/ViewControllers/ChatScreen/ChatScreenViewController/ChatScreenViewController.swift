@@ -67,7 +67,7 @@ class ChatScreenViewController: UIViewController {
     private func setupInterface() {
         view.backgroundColor = .systemBackground
     }
-
+    
     private func setupConstraints() {
         view.addSubview(screenTitle)
         view.addSubview(chatTableView)
@@ -83,7 +83,7 @@ class ChatScreenViewController: UIViewController {
         chatTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         chatTableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 8).isActive = true
         chatTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        chatTableView.bottomAnchor.constraint(equalTo: textViewContainer.topAnchor, constant: 0).isActive = true
+        chatTableView.bottomAnchor.constraint(equalTo: textView.topAnchor, constant: -8).isActive = true
         
         textViewContainer.translatesAutoresizingMaskIntoConstraints = false
         textViewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -111,10 +111,13 @@ class ChatScreenViewController: UIViewController {
     //MARK: - Actions
     
     @objc private func sendMessage() {
+        if let message = textView.text, !message.trimmingCharacters(in: .whitespaces).isEmpty {
+            chatTableView.messages?.append(message)
+        }
         textView.text = ""
         textView.resignFirstResponder()
     }
-
+    
 }
 
 //MARK: - ChatScreen Methods
@@ -122,6 +125,7 @@ class ChatScreenViewController: UIViewController {
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
         chatTableView.messages = messages
+        chatTableView.scrollToBottom(isAnimated: false)
     }
 }
 
@@ -142,7 +146,10 @@ extension ChatScreenViewController: ChatTableViewProtocol {
 
 //MARK: - UITextViewDelegate
 
-extension ChatScreenViewController: UITextViewDelegate{
+extension ChatScreenViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        chatTableView.scrollToBottom(isAnimated: false)
+    }
     
 }
 
@@ -154,10 +161,34 @@ extension ChatScreenViewController {
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
     }
+}
+
+
+extension UITableView {
+    func scrollToBottom(isAnimated:Bool = true) {
+        let indexPath = IndexPath(
+            row: numberOfRows(inSection:  numberOfSections-1) - 1,
+            section: numberOfSections - 1)
+        if hasRowAtIndexPath(indexPath: indexPath) {
+            scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
+        }
+    }
+    
+    func scrollToTop(isAnimated:Bool = true) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if hasRowAtIndexPath(indexPath: indexPath) {
+            scrollToRow(at: indexPath, at: .top, animated: isAnimated)
+        }
+    }
+    
+    func hasRowAtIndexPath(indexPath: IndexPath) -> Bool {
+        return indexPath.section < numberOfSections && indexPath.row < numberOfRows(inSection: indexPath.section)
+    }
+    
 }
