@@ -40,13 +40,15 @@ final class ChatTableViewCell: UITableViewCell  {
     private func setData(_ message: MessageViewModel) {
         messageView.messageLabel.text = message.message
         messageView.isIncoming = message.incoming
-        messageView.timeLabel.text = Date().toString(time: .medium)
+        messageView.timeLabel.text = message.date
+        
         leadingOrTrailingConstraint.isActive = false
         contentView.addSubview(messageView)
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, multiplier: 0.66).isActive = true
         messageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12.0).isActive = true
         messageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.0).isActive = true
+        
         switch message.incoming {
         case true:
             leadingOrTrailingConstraint = messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
@@ -63,12 +65,12 @@ extension ChatTableViewCell: Configurable {
     
     struct ChatTableViewCellModel {
         let message: String
-        let avatarURL: String?
-        let messageDate: String?
+        let avatarURL: String
+        let messageDate: String
     }
     
     func configure(with model: Model) {
-        setData(MessageViewModel(incoming: true, message: model.message))
+        setData(MessageViewModel(incoming: true, message: model.message, date: model.messageDate))
     }
     
 }

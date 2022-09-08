@@ -41,8 +41,8 @@ final class Router: RouterProtocol {
     
     func openChatScreen() {
         let chatScreenVC = ChatScreenViewController()
-        let chatController = ChatController(view: chatScreenVC, chatService: ChatServiceImp.chatService)
-        chatScreenVC.controller = chatController
+        let presenter = ChatPresenter(view: chatScreenVC, chatService: ChatServiceImp.chatService)
+        chatScreenVC.presenter = presenter
         navigationController.navigationBar.isHidden = true
         navigationController.viewControllers = [chatScreenVC]
     }

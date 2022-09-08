@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol ChatScreen: AnyObject {
+protocol ChatScreen: AnyObject, EmptyStateProtocol {
     func updateView(_ messages: [String]) async
 }
 
 class ChatScreenViewController: UIViewController {
     
-    // MARK: - Controller
+    // MARK: - Presenter
     
-    var controller: ChatScreenProtocol?
+    var presenter: ChatScreenProtocol?
     
     // MARK: - Views
     
@@ -35,7 +35,7 @@ class ChatScreenViewController: UIViewController {
         setupInterface()
         setupConstraints()
         Task {
-            await controller?.fetchMessages(offset: 0)
+            await presenter?.fetchMessages(offset: 0)
         }
     }
     
@@ -63,5 +63,4 @@ extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
         chatTableView.messages = messages
     }
-    
 }

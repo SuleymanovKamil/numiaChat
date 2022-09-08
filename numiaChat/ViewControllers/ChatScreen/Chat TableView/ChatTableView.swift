@@ -73,7 +73,7 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as! ChatTableViewCell
         if let message = messages?[indexPath.row] {
-            cell.configure(with: ChatTableViewCell.Model(message: message, avatarURL: nil, messageDate: nil))
+            cell.configure(with: ChatTableViewCell.Model(message: message, avatarURL: "", messageDate: Date().toString(time: .medium)))
         }
         return cell
     }

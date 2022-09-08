@@ -10,4 +10,5 @@ import Foundation
 struct MessageViewModel {
     let incoming: Bool
     let message: String
+    let date: String
 }
