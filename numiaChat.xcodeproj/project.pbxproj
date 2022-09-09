@@ -12,6 +12,7 @@
 		6B683F1D28C9BFEE00B2B4AF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B683F1C28C9BFEE00B2B4AF /* Date.swift */; };
 		6B683F2428CA713400B2B4AF /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B683F2328CA713300B2B4AF /* Loadable.swift */; };
 		6B683F2B28CA73EA00B2B4AF /* DynamicalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B683F2928CA73EA00B2B4AF /* DynamicalTextView.swift */; };
+		6B683F2D28CB2F5800B2B4AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B683F2C28CB2F5800B2B4AF /* UIColor.swift */; };
 		6B84403128C8F78B006EF39B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403028C8F78B006EF39B /* AppDelegate.swift */; };
 		6B84403328C8F78B006EF39B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403228C8F78B006EF39B /* SceneDelegate.swift */; };
 		6B84403528C8F78B006EF39B /* ChatScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84403428C8F78B006EF39B /* ChatScreenViewController.swift */; };
@@ -41,6 +42,7 @@
 		6B683F1C28C9BFEE00B2B4AF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Date.swift; path = "numiaChat/Model/Helpers/Empty State/Date.swift"; sourceTree = SOURCE_ROOT; };
 		6B683F2328CA713300B2B4AF /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		6B683F2928CA73EA00B2B4AF /* DynamicalTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicalTextView.swift; sourceTree = "<group>"; };
+		6B683F2C28CB2F5800B2B4AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = numiaChat/Model/Helpers/Loadable/UIColor.swift; sourceTree = SOURCE_ROOT; };
 		6B84402D28C8F78B006EF39B /* numiaChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = numiaChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B84403028C8F78B006EF39B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B84403228C8F78B006EF39B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				6B683F1C28C9BFEE00B2B4AF /* Date.swift */,
+				6B683F2C28CB2F5800B2B4AF /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				6B683F2428CA713400B2B4AF /* Loadable.swift in Sources */,
 				6B84408828C913D4006EF39B /* ChatBubbleView.swift in Sources */,
 				6B84407328C8FDF2006EF39B /* ChatTableView.swift in Sources */,
+				6B683F2D28CB2F5800B2B4AF /* UIColor.swift in Sources */,
 				6B84408028C9080E006EF39B /* ChatController.swift in Sources */,
 				6B84407C28C90222006EF39B /* Configurable.swift in Sources */,
 				6B683F1D28C9BFEE00B2B4AF /* Date.swift in Sources */,

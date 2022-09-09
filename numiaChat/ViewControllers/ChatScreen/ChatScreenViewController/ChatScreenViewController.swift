@@ -21,7 +21,7 @@ class ChatScreenViewController: UIViewController {
     
     private lazy var screenTitle: UILabel = {
         let label = UILabel()
-        label.text = "Тестовое задание"
+//        label.text = "Тестовое задание"
         label.font = .systemFont(ofSize: 26, weight: .black)
         return label
     }()
@@ -51,6 +51,7 @@ class ChatScreenViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 24)
         button.setImage(UIImage(systemName: "arrow.up.circle.fill", withConfiguration: configuration), for: .normal)
         button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+        button.tintColor = .textColor
         return button
     }()
     
@@ -112,7 +113,7 @@ class ChatScreenViewController: UIViewController {
     
     @objc private func sendMessage() {
         if let message = textView.text, !message.trimmingCharacters(in: .whitespaces).isEmpty {
-            chatTableView.messages.append(MessageViewModel(incoming: false, message: message, date: Date().toString(time: .short)))
+            chatTableView.messages.append(MessageViewModel(image: "person.crop.circle", incoming: false, message: message, date: Date().toString(time: .short)))
         }
         textView.text = ""
         textView.resignFirstResponder()
@@ -124,7 +125,7 @@ class ChatScreenViewController: UIViewController {
 
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
-        chatTableView.messages =  messages.map({ MessageViewModel(incoming: true, message: $0, date: Date().toString(time: .short)) })
+        chatTableView.messages =  messages.map({ MessageViewModel(image: "person.crop.circle.fill", incoming: true, message: $0, date: Date().toString(time: .short)) })
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }
