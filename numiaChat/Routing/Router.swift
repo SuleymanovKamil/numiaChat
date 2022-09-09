@@ -48,6 +48,7 @@ final class Router: RouterProtocol {
     
     func openMessageDetailScreen(with message: MessageViewModel) {
         let messageDetailVC = MessageDetailViewController()
+        messageDetailVC.message = message
         navigationController.pushViewController(messageDetailVC, animated: true)
     }
 
