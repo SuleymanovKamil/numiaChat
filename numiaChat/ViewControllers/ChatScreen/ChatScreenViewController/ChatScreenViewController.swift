@@ -21,7 +21,7 @@ class ChatScreenViewController: UIViewController {
     
     private lazy var screenTitle: UILabel = {
         let label = UILabel()
-//        label.text = "Тестовое задание"
+        label.text = "Тестовое задание"
         label.font = .systemFont(ofSize: 26, weight: .black)
         return label
     }()
@@ -112,8 +112,11 @@ class ChatScreenViewController: UIViewController {
     //MARK: - Actions
     
     @objc private func sendMessage() {
-        if let message = textView.text, !message.trimmingCharacters(in: .whitespaces).isEmpty {
-            chatTableView.messages.append(MessageViewModel(image: "person.crop.circle", incoming: false, message: message, date: Date().toString(time: .short)))
+        if let text = textView.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
+            let message = MessageViewModel(image: "person.crop.circle", incoming: false, message: text, date: Date().toString(time: .short))
+            chatTableView.messages.append(message)
+            let coreDataService = CoreDataService.shared
+            coreDataService.saveData(message: message)
         }
         textView.text = ""
         textView.resignFirstResponder()
@@ -124,8 +127,12 @@ class ChatScreenViewController: UIViewController {
 //MARK: - ChatScreen Methods
 
 extension ChatScreenViewController: ChatScreen {
-    func updateView(_ messages: [String]) {
-        chatTableView.messages =  messages.map({ MessageViewModel(image: "person.crop.circle.fill", incoming: true, message: $0, date: Date().toString(time: .short)) })
+    func updateView(_ messages: [String]) async {
+        var messagesArray = messages.map({ MessageViewModel(image: "person.crop.circle.fill", incoming: true, message: $0, date: Date().toString(time: .short))})
+        if let savedMessages = await presenter?.fetchSavedMessages() {
+            messagesArray.append(contentsOf: savedMessages)
+        }
+        chatTableView.messages = messagesArray
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }

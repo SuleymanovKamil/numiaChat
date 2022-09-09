@@ -9,6 +9,7 @@ import UIKit
 
 protocol ChatScreenProtocol: AnyObject {
     func fetchMessages(offset: Int) async
+    func fetchSavedMessages() async -> [MessageViewModel]
 }
 
 final class ChatPresenter {
@@ -45,6 +46,14 @@ extension ChatPresenter: ChatScreenProtocol {
             print(#function, error.localizedDescription)
         }
         
+    }
+    
+    func fetchSavedMessages() async -> [MessageViewModel] {
+        guard CoreDataService.shared.fetchData().isEmpty == false else {
+            return []
+        }
+   
+        return CoreDataService.shared.fetchData().map({MessageViewModel(image: $0.value(forKeyPath: "avatar") as? String, incoming: false, message: $0.value(forKeyPath: "message") as! String, date: $0.value(forKeyPath: "date") as! String) })
     }
     
 }

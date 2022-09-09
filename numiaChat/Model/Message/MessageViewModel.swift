@@ -8,6 +8,7 @@
 import Foundation
 
 struct MessageViewModel {
+    let id = UUID().uuid
     let image: String?
     let incoming: Bool
     let message: String
