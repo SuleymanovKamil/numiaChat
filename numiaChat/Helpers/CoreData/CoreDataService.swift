@@ -47,6 +47,7 @@ final class CoreDataService {
         let context = persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "MessageEntity", in: context)!
         let messageEntity = NSManagedObject(entity: entity, insertInto: context)
+        messageEntity.setValue(message.id, forKeyPath: "id")
         messageEntity.setValue(message.message, forKeyPath: "message")
         messageEntity.setValue(message.image, forKeyPath: "avatar")
         messageEntity.setValue(message.date, forKeyPath: "date")

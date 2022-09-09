@@ -9,7 +9,7 @@ import UIKit
 
 protocol ChatTableViewProtocol: AnyObject {
     func requestForNextPage(offset: Int)
-    func showMessageDetail(with message: MessageViewModel)
+    func showMessageDetail(with message: MessageViewModel, at index: Int)
 }
 
 final class ChatTableView: UITableView {
@@ -67,7 +67,7 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        eventsDelegate?.showMessageDetail(with: messages[indexPath.row])
+        eventsDelegate?.showMessageDetail(with: messages[indexPath.row], at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

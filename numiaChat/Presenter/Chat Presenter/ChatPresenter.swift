@@ -10,7 +10,7 @@ import UIKit
 protocol ChatScreenProtocol: AnyObject {
     func fetchMessages(offset: Int) async
     func fetchSavedMessages() async -> [MessageViewModel]
-    func showMessageDetailScreen(_ message: MessageViewModel)
+    func showMessageDetailScreen(_ message: MessageViewModel, at index: Int)
 }
 
 final class ChatPresenter {
@@ -60,8 +60,8 @@ extension ChatPresenter: ChatScreenProtocol {
         return CoreDataService.shared.fetchData().map({MessageViewModel(image: $0.value(forKeyPath: "avatar") as? String, incoming: false, message: $0.value(forKeyPath: "message") as! String, date: $0.value(forKeyPath: "date") as! String) })
     }
     
-    func showMessageDetailScreen(_ message: MessageViewModel) {
-        router.openMessageDetailScreen(with: message)
+    func showMessageDetailScreen(_ message: MessageViewModel, at index: Int) {
+        router.openMessageDetailScreen(with: message, at: index, delegate: view)
     }
     
 }

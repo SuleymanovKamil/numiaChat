@@ -11,7 +11,7 @@ protocol RouterProtocol {
     func pop(animated: Bool)
     func dismiss()
     func openChatScreen()
-    func openMessageDetailScreen(with message: MessageViewModel)
+    func openMessageDetailScreen(with message: MessageViewModel, at index: Int, delegate: MessageDetailViewProtocol)
 }
 
 final class Router: RouterProtocol {
@@ -46,8 +46,10 @@ final class Router: RouterProtocol {
         navigationController.viewControllers = [chatScreenVC]
     }
     
-    func openMessageDetailScreen(with message: MessageViewModel) {
+    func openMessageDetailScreen(with message: MessageViewModel, at index: Int, delegate: MessageDetailViewProtocol) {
         let messageDetailVC = MessageDetailViewController()
+        messageDetailVC.delegate = delegate
+        messageDetailVC.index = index
         messageDetailVC.message = message
         navigationController.pushViewController(messageDetailVC, animated: true)
     }

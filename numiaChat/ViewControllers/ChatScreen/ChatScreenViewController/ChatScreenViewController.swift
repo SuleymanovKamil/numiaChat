@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ChatScreen: AnyObject, EmptyStateProtocol, Loadable {
+protocol ChatScreen: EmptyStateProtocol, Loadable, MessageDetailViewProtocol {
     func updateView(_ messages: [String]) async
 }
 
@@ -130,6 +130,12 @@ class ChatScreenViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
+    //MARK: - MessageDetailViewProtocol
+    
+    func deleteMessage(at index: Int) {
+        chatTableView.messages.remove(at: index)
+    }
+    
 }
 
 //MARK: - ChatScreen Methods
@@ -153,14 +159,15 @@ extension ChatScreenViewController: ChatScreen {
 //MARK: - ChatTableViewProtocol
 
 extension ChatScreenViewController: ChatTableViewProtocol {
+ 
     func requestForNextPage(offset: Int) {
         Task {
             await presenter?.fetchMessages(offset: offset)
         }
     }
     
-    func showMessageDetail(with message: MessageViewModel) {
-        presenter?.showMessageDetailScreen(message)
+    func showMessageDetail(with message: MessageViewModel, at: Int) {
+        presenter?.showMessageDetailScreen(message, at: at)
     }
 }
 
