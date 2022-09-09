@@ -16,6 +16,8 @@ final class ChatTableViewCell: UITableViewCell  {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.placeholderText.cgColor
         return imageView
     }()
     private lazy var messageView: ChatBubbleView = {
