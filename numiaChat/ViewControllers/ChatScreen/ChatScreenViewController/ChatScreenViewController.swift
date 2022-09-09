@@ -121,14 +121,20 @@ class ChatScreenViewController: UIViewController {
     
     @objc private func sendMessage() {
         if let text = textView.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
-            let message = MessageViewModel(image: "person.crop.circle", incoming: false, message: text, date: Date().toString(time: .short))
+            let message = MessageViewModel(id: String(0), image: "person.crop.circle", incoming: false, message: text, date: Date().toString(time: .short))
             chatTableView.messages.append(message)
             let coreDataService = CoreDataService.shared
             coreDataService.saveData(message: message)
+            
+            Task {
+                try await Task.sleep(nanoseconds: 100_000_000)
+                chatTableView.scrollToBottom(isAnimated: false)
+            }
         }
         textView.text = ""
         textView.resignFirstResponder()
     }
+    
     
     //MARK: - MessageDetailViewProtocol
     
@@ -142,16 +148,23 @@ class ChatScreenViewController: UIViewController {
 
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) async {
-        var messagesArray = messages.map({ MessageViewModel(image: "person.crop.circle.fill", incoming: true, message: $0, date: Date().toString(time: .short))})
+        var messagesArray: [MessageViewModel] = []
+        for index in 0..<messages.count {
+            messagesArray.append(MessageViewModel(id: String(index), image: "person.crop.circle.fill", incoming: true, message:  messages[index], date: Date().toString(time: .short)))
+        }
+        
         if let savedMessages = await presenter?.fetchSavedMessages() {
             messagesArray.append(contentsOf: savedMessages)
+            chatTableView.savedMessagesCount = savedMessages.count
         }
-        chatTableView.messages = messagesArray
-       
-        guard messages.count <= 20 else {
+    
+        chatTableView.messages = messagesArray.sorted(by: { Int($0.id)! > Int($1.id)! })
+        
+        guard chatTableView.messages.isEmpty == false, messages.count <= 20 else {
             return
         }
         
+      
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }
@@ -159,7 +172,6 @@ extension ChatScreenViewController: ChatScreen {
 //MARK: - ChatTableViewProtocol
 
 extension ChatScreenViewController: ChatTableViewProtocol {
- 
     func requestForNextPage(offset: Int) {
         Task {
             await presenter?.fetchMessages(offset: offset)
@@ -175,6 +187,10 @@ extension ChatScreenViewController: ChatTableViewProtocol {
 
 extension ChatScreenViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        guard chatTableView.messages.isEmpty == false else {
+            return
+        }
+        
         Task {
             try await Task.sleep(nanoseconds: 10_000_000)
             chatTableView.scrollToBottom(isAnimated: false)

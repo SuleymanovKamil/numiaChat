@@ -37,7 +37,12 @@ extension ChatPresenter: ChatScreenProtocol {
         let result = await chatService.fetchMessages(offset: offset)
         switch result {
         case .success(let data):
-            messages.insert(contentsOf: data.result.reversed(), at: 0)
+            guard data.result.count > 0 else {
+                view.hideLoading()
+                return
+            }
+            
+            messages += data.result
             await view.updateView(messages)
             view.hideLoading()
         case .failure(let error):
@@ -57,7 +62,7 @@ extension ChatPresenter: ChatScreenProtocol {
             return []
         }
    
-        return CoreDataService.shared.fetchData().map({MessageViewModel(image: $0.value(forKeyPath: "avatar") as? String, incoming: false, message: $0.value(forKeyPath: "message") as! String, date: $0.value(forKeyPath: "date") as! String) })
+        return CoreDataService.shared.fetchData().map({MessageViewModel(id: $0.value(forKeyPath: "id") as! String, image: $0.value(forKeyPath: "avatar") as? String, incoming: false, message: $0.value(forKeyPath: "message") as! String, date: $0.value(forKeyPath: "date") as! String) })
     }
     
     func showMessageDetailScreen(_ message: MessageViewModel, at index: Int) {

@@ -20,10 +20,22 @@ final class ChatTableView: UITableView {
   
     // MARK: - Properties
     
-    var messagesCount = 0
+    var savedMessagesCount = 0
+    private var offset: Int {
+        return 23 - savedMessagesCount //количество подгружаемых сообщений за один запрос + индекс на котором срабатывает метод пагинации
+    }
+    private var isLoading = false
     var messages: [MessageViewModel] = [] {
         didSet {
             reloadData()
+            
+            guard isLoading else {
+                return
+            }
+            
+            scrollToRow(at: IndexPath(row: offset, section: 0), at: .top, animated: false)
+            isScrollEnabled = true
+            isLoading = false
         }
     }
 
@@ -70,20 +82,14 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
         eventsDelegate?.showMessageDetail(with: messages[indexPath.row], at: indexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.row == 10 else {
-            return
-        }
-        
-        messagesCount = totalRowsCount
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard messagesCount == totalRowsCount, numberOfRowsToEndFrom(indexPath: indexPath) < 5 else {
+        guard isLoading == false, numberOfRowsToEndFrom(indexPath: indexPath) + savedMessagesCount < 5 else {
             return
         }
         
         eventsDelegate?.requestForNextPage(offset: messages.count)
+        isScrollEnabled = false
+        isLoading = true
     }
-
+   
 }

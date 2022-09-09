@@ -3,9 +3,10 @@
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES" codeGenerationType="class">
         <attribute name="avatar" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="message" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="MessageEntity" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="MessageEntity" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>
