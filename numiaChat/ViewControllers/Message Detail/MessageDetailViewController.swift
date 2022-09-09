@@ -123,9 +123,9 @@ final class MessageDetailViewController: UIViewController {
             return
         }
         
-        avatarImageView.loadFrom(URLAddress: "https://cdn1.iconfinder.com/data/icons/diversity-avatars-volume-1-heads/64/matrix-neo-man-white-512.png")
         messageLabel.text = message.message
         dateLabel.text = message.date
+        avatarImageView.loadFrom(URLAddress: message.image ?? "")
     }
     
     //MARK: - Actions
