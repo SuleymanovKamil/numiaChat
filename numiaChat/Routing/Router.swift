@@ -11,7 +11,7 @@ protocol RouterProtocol {
     func pop(animated: Bool)
     func dismiss()
     func openChatScreen()
-
+    func openMessageDetailScreen(with message: MessageViewModel)
 }
 
 final class Router: RouterProtocol {
@@ -43,8 +43,12 @@ final class Router: RouterProtocol {
         let chatScreenVC = ChatScreenViewController()
         let presenter = ChatPresenter(view: chatScreenVC, chatService: ChatServiceImp.chatService)
         chatScreenVC.presenter = presenter
-        navigationController.navigationBar.isHidden = true
         navigationController.viewControllers = [chatScreenVC]
+    }
+    
+    func openMessageDetailScreen(with message: MessageViewModel) {
+        let messageDetailVC = MessageDetailViewController()
+        navigationController.pushViewController(messageDetailVC, animated: true)
     }
 
 }

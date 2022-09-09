@@ -27,7 +27,7 @@ class ChatScreenViewController: UIViewController {
     }()
     private lazy var chatTableView: ChatTableView = {
         let tableView = ChatTableView()
-        tableView.chatTableViewDelegate = self
+        tableView.eventsDelegate = self
         return tableView
     }()
     private lazy var textViewContainer: UIView = {
@@ -55,9 +55,10 @@ class ChatScreenViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupInterface()
         setupConstraints()
         setupKeyboardObservers()
         Task {
@@ -65,7 +66,14 @@ class ChatScreenViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupInterface()
+    }
+    
+    // MARK: - Setups
+    
     private func setupInterface() {
+        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .systemBackground
     }
     
@@ -133,6 +141,11 @@ extension ChatScreenViewController: ChatScreen {
             messagesArray.append(contentsOf: savedMessages)
         }
         chatTableView.messages = messagesArray
+       
+        guard messages.count <= 20 else {
+            return
+        }
+        
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }
@@ -140,26 +153,30 @@ extension ChatScreenViewController: ChatScreen {
 //MARK: - ChatTableViewProtocol
 
 extension ChatScreenViewController: ChatTableViewProtocol {
-    func showMessageDetail() {
-        
-    }
-    
-    func refreshData() {
+    func requestForNextPage(offset: Int) {
         Task {
-            await presenter?.fetchMessages(offset: 0)
+            await presenter?.fetchMessages(offset: offset)
         }
     }
     
+    func showMessageDetail(with message: MessageViewModel) {
+        presenter?.showMessageDetailScreen(message)
+    }
 }
 
 //MARK: - UITextViewDelegate
 
 extension ChatScreenViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        chatTableView.scrollToBottom(isAnimated: false)
+        Task {
+            try await Task.sleep(nanoseconds: 10_000_000)
+            chatTableView.scrollToBottom(isAnimated: false)
+        }
     }
     
 }
+
+//MARK: - Keyboard Notifications
 
 extension ChatScreenViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -177,26 +194,3 @@ extension ChatScreenViewController {
     }
 }
 
-
-extension UITableView {
-    func scrollToBottom(isAnimated:Bool = true) {
-        let indexPath = IndexPath(
-            row: numberOfRows(inSection:  numberOfSections-1) - 1,
-            section: numberOfSections - 1)
-        if hasRowAtIndexPath(indexPath: indexPath) {
-            scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
-        }
-    }
-    
-    func scrollToTop(isAnimated:Bool = true) {
-        let indexPath = IndexPath(row: 0, section: 0)
-        if hasRowAtIndexPath(indexPath: indexPath) {
-            scrollToRow(at: indexPath, at: .top, animated: isAnimated)
-        }
-    }
-    
-    func hasRowAtIndexPath(indexPath: IndexPath) -> Bool {
-        return indexPath.section < numberOfSections && indexPath.row < numberOfRows(inSection: indexPath.section)
-    }
-    
-}

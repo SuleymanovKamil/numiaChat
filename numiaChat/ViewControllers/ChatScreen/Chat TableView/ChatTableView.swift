@@ -8,35 +8,22 @@
 import UIKit
 
 protocol ChatTableViewProtocol: AnyObject {
-    func showMessageDetail()
-    func refreshData() 
+    func requestForNextPage(offset: Int)
+    func showMessageDetail(with message: MessageViewModel)
 }
 
 final class ChatTableView: UITableView {
     
     // MARK: - Delegate
     
-    weak var chatTableViewDelegate: ChatTableViewProtocol?
-     
-     // MARK: - Views
-     
-     private lazy var customRefreshControl: UIRefreshControl = {
-         let refreshControl = UIRefreshControl()
-         refreshControl.tintColor = .brown
-         refreshControl.addTarget(self, action: #selector(refreshControlAction), for: .valueChanged)
-         return refreshControl
-     }()
-    
-    
+    weak var eventsDelegate: ChatTableViewProtocol?
+  
     // MARK: - Properties
     
+    var messagesCount = 0
     var messages: [MessageViewModel] = [] {
         didSet {
             reloadData()
-            Timer.scheduledTimer(withTimeInterval: 0.23, repeats: false) { [weak self] timer in
-                timer.invalidate()
-                self?.scrollToBottom()
-            }
         }
     }
 
@@ -47,7 +34,6 @@ final class ChatTableView: UITableView {
         setupInterface()
         setupDelegate()
         registerTableViewCell()
-        setupRefreshControl()
     }
     
     // MARK: - Setups
@@ -66,17 +52,7 @@ final class ChatTableView: UITableView {
         showsVerticalScrollIndicator = true
         backgroundColor = .systemBackground
     }
-    
-    private func setupRefreshControl() {
-        addSubview(customRefreshControl)
-    }
-    
-    // MARK: - RefreshControl action
-    
-    @objc private func refreshControlAction() {
-        chatTableViewDelegate?.refreshData()
-        customRefreshControl.endRefreshing()
-    }
+   
 }
 extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,12 +62,28 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as! ChatTableViewCell
         cell.configure(with: ChatTableViewCell.Model(message: messages[indexPath.row]))
-        
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(#function)
+        eventsDelegate?.showMessageDetail(with: messages[indexPath.row])
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard indexPath.row == 10 else {
+            return
+        }
+        
+        messagesCount = totalRowsCount
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard messagesCount == totalRowsCount, numberOfRowsToEndFrom(indexPath: indexPath) < 5 else {
+            return
+        }
+        
+        eventsDelegate?.requestForNextPage(offset: messages.count)
+    }
+
 }
