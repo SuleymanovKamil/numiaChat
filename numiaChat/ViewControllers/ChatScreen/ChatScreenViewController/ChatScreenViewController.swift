@@ -124,7 +124,7 @@ class ChatScreenViewController: UIViewController {
 
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) {
-        chatTableView.messages =  messages.map({ MessageViewModel(incoming: false, message: $0, date: Date().toString(time: .short)) })
+        chatTableView.messages =  messages.map({ MessageViewModel(incoming: true, message: $0, date: Date().toString(time: .short)) })
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }
