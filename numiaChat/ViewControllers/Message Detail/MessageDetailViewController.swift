@@ -31,7 +31,7 @@ final class MessageDetailViewController: UIViewController {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 25
+        imageView.layer.cornerRadius = 100
         imageView.layer.masksToBounds = true
         imageView.tintColor = .textColor
         imageView.alpha = 0
@@ -102,6 +102,8 @@ final class MessageDetailViewController: UIViewController {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         avatarImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        avatarImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        avatarImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         view.addSubview(messageStackView)
         messageStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -121,8 +123,7 @@ final class MessageDetailViewController: UIViewController {
             return
         }
         
-        let configuration = UIImage.SymbolConfiguration(pointSize: 50)
-        avatarImageView.image = UIImage(systemName: message.image ?? "person.fill.questionmark", withConfiguration: configuration)
+        avatarImageView.loadFrom(URLAddress: "https://cdn1.iconfinder.com/data/icons/diversity-avatars-volume-1-heads/64/matrix-neo-man-white-512.png")
         messageLabel.text = message.message
         dateLabel.text = message.date
     }

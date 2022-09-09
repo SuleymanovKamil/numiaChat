@@ -121,7 +121,7 @@ class ChatScreenViewController: UIViewController {
     
     @objc private func sendMessage() {
         if let text = textView.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
-            let message = MessageViewModel(id: String(0), image: "person.crop.circle", incoming: false, message: text, date: Date().toString(time: .short))
+            let message = MessageViewModel(id: String(0), image: "https://www.shareicon.net/data/128x128/2015/06/22/58079_smith_512x512.png", incoming: false, message: text, date: Date().toString(time: .short))
             chatTableView.messages.append(message)
             let coreDataService = CoreDataService.shared
             coreDataService.saveData(message: message)
@@ -150,7 +150,7 @@ extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) async {
         var messagesArray: [MessageViewModel] = []
         for index in 0..<messages.count {
-            messagesArray.append(MessageViewModel(id: String(index), image: "person.crop.circle.fill", incoming: true, message:  messages[index], date: Date().toString(time: .short)))
+            messagesArray.append(MessageViewModel(id: String(index), image: "https://cdn1.iconfinder.com/data/icons/diversity-avatars-volume-1-heads/64/matrix-neo-man-white-512.png", incoming: true, message:  messages[index], date: Date().toString(time: .short)))
         }
         
         if let savedMessages = await presenter?.fetchSavedMessages() {

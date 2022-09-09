@@ -42,6 +42,11 @@ final class ChatTableViewCell: UITableViewCell  {
         setupInterface()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = nil
+    }
+    
     //MARK: - Setups
     
     private func setupInterface() {
@@ -84,11 +89,7 @@ final class ChatTableViewCell: UITableViewCell  {
             return
         }
         
-        //Здесь должна быть загрузка изображения из интернета с кэшированием ее, но в рамках задания нельзя использовать сторонние библиотеки, а поднимать свой кэш слишком долго
-        
-        let configuration = UIImage.SymbolConfiguration(pointSize: 40)
-        avatarImageView.image = UIImage(systemName: image, withConfiguration: configuration)
-        avatarImageView.tintColor = message.incoming ? .placeholderText : .tertiaryLabel
+        avatarImageView.loadFrom(URLAddress: image)
     }
     
 }
