@@ -53,7 +53,7 @@ final class ChatTableViewCell: UITableViewCell  {
         case true:
             leadingOrTrailingConstraint = messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
         case false:
-            leadingOrTrailingConstraint = messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12.0)
+            leadingOrTrailingConstraint = messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -82.0)
         }
         leadingOrTrailingConstraint.isActive = true
     }
