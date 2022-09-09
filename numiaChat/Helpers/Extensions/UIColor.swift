@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIColor {
-    
     class var textColor: UIColor {
         return UIColor(named: "TextColor")!
     }

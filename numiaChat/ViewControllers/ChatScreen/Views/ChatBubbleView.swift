@@ -28,14 +28,14 @@ final class ChatBubbleView: UIView {
     
     var isIncoming = false
     var timeLabelLeadingOrTrailingConstraint = NSLayoutConstraint()
-
+    
     //MARK: - Lifecycle
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         setupConstraints()
     }
-
+    
     //MARK: - Setups
     
     private func setupConstraints() {
@@ -52,7 +52,7 @@ final class ChatBubbleView: UIView {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12.0).isActive = true
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         let width = bounds.size.width + 80

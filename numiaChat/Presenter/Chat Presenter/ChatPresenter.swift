@@ -61,7 +61,7 @@ extension ChatPresenter: ChatScreenProtocol {
         guard CoreDataService.shared.fetchData().isEmpty == false else {
             return []
         }
-   
+        
         return CoreDataService.shared.fetchData().map({MessageViewModel(id: $0.value(forKeyPath: "id") as! String, image: $0.value(forKeyPath: "avatar") as? String, incoming: false, message: $0.value(forKeyPath: "message") as! String, date: $0.value(forKeyPath: "date") as! String) })
     }
     

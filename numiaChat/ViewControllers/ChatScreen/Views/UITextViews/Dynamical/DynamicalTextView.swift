@@ -21,7 +21,7 @@ class DynamicalTextView: UITextView {
             placeholderLabel.text = placeholder
         }
     }
-   
+    
     // MARK: - Interface Properties
     
     var placeholderColor: UIColor = .placeholderText {

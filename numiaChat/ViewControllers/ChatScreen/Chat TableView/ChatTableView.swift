@@ -17,7 +17,7 @@ final class ChatTableView: UITableView {
     // MARK: - Delegate
     
     weak var eventsDelegate: ChatTableViewProtocol?
-  
+    
     // MARK: - Properties
     
     var savedMessagesCount = 0
@@ -38,7 +38,7 @@ final class ChatTableView: UITableView {
             isLoading = false
         }
     }
-
+    
     // MARK: - Lifecycle
     
     override func didMoveToSuperview() {
@@ -64,7 +64,7 @@ final class ChatTableView: UITableView {
         showsVerticalScrollIndicator = true
         backgroundColor = .systemBackground
     }
-   
+    
 }
 extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,5 +91,5 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
         isScrollEnabled = false
         isLoading = true
     }
-   
+    
 }

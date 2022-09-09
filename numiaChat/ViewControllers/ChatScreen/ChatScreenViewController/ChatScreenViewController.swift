@@ -139,7 +139,12 @@ class ChatScreenViewController: UIViewController {
     //MARK: - MessageDetailViewProtocol
     
     func deleteMessage(at index: Int) {
+        if chatTableView.messages[index].incoming == false {
+            CoreDataService.shared.deleteEntity(message: chatTableView.messages[index])
+        }
+        
         chatTableView.messages.remove(at: index)
+        
     }
     
 }
@@ -157,14 +162,14 @@ extension ChatScreenViewController: ChatScreen {
             messagesArray.append(contentsOf: savedMessages)
             chatTableView.savedMessagesCount = savedMessages.count
         }
-    
+        
         chatTableView.messages = messagesArray.sorted(by: { Int($0.id)! > Int($1.id)! })
         
         guard chatTableView.messages.isEmpty == false, messages.count <= 20 else {
             return
         }
         
-      
+        
         chatTableView.scrollToBottom(isAnimated: false)
     }
 }

@@ -9,8 +9,8 @@
 import UIKit
 
 protocol Loadable {
-  func showLoading()
-  func hideLoading()
+    func showLoading()
+    func hideLoading()
 }
 
 extension Loadable {

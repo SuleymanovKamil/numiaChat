@@ -25,9 +25,9 @@ final class MessageDetailViewController: UIViewController {
             setupContent()
         }
     }
-  
+    
     //MARK: - Views
-   
+    
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -48,7 +48,7 @@ final class MessageDetailViewController: UIViewController {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.alpha = 0
         return stackView
-     }()
+    }()
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -134,7 +134,7 @@ final class MessageDetailViewController: UIViewController {
         guard let index = index else {
             return
         }
-
+        
         delegate?.deleteMessage(at: index)
         Router.shared.pop(animated: true)
     }

@@ -59,16 +59,23 @@ final class CoreDataService {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-  
+    
     // MARK: - Core Data Delete Methods
     
-    func deleteEntity(object: NSManagedObject) {
+    func deleteEntity(message: MessageViewModel) {
         let context = persistentContainer.viewContext
-        context.delete(object)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "MessageEntity")
+        fetchRequest.predicate = NSPredicate(format: "\("message") CONTAINS[cd] %@", message.message)
+        
         do {
+            let objects = try context.fetch(fetchRequest)
+            for object in objects {
+                context.delete(object)
+            }
             try context.save()
-        } catch {
-            print("error deleting coreData object: \(error.localizedDescription)")
+        }
+        catch {
+            print("error with delete coreData entity: \(error.localizedDescription)")
         }
     }
     

@@ -26,8 +26,8 @@ final class ErrorView: UIView {
         stackView.distribution = .equalSpacing
         stackView.spacing = 12
         stackView.alignment = .center
-         return stackView
-     }()
+        return stackView
+    }()
     private lazy var title: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -58,7 +58,7 @@ final class ErrorView: UIView {
         stackView.alignment = .center
         stackView.spacing = 12
         return stackView
-     }()
+    }()
     private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
