@@ -123,8 +123,7 @@ class ChatScreenViewController: UIViewController {
         if let text = textView.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
             let message = MessageViewModel(id: String(0), image: "https://www.shareicon.net/data/128x128/2015/06/22/58079_smith_512x512.png", incoming: false, message: text, date: Date().toString(time: .short))
             chatTableView.messages.append(message)
-            let coreDataService = CoreDataService.shared
-            coreDataService.saveData(message: message)
+            CoreDataService.shared.saveData(message: message)
             
             Task {
                 try await Task.sleep(nanoseconds: 100_000_000)
@@ -144,7 +143,6 @@ class ChatScreenViewController: UIViewController {
         }
         
         chatTableView.messages.remove(at: index)
-        
     }
     
 }
