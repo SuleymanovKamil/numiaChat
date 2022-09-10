@@ -34,7 +34,6 @@ final class ChatTableView: UITableView {
             }
             
             scrollToRow(at: IndexPath(row: offset, section: 0), at: .top, animated: false)
-            isScrollEnabled = true
             isLoading = false
         }
     }
@@ -88,7 +87,6 @@ extension ChatTableView: UITableViewDelegate, UITableViewDataSource {
         }
         
         eventsDelegate?.requestForNextPage(offset: messages.count)
-        isScrollEnabled = false
         isLoading = true
     }
     
