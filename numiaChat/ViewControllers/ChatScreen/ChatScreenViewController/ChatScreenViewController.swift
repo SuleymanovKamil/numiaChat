@@ -120,20 +120,21 @@ class ChatScreenViewController: UIViewController {
     //MARK: - Actions
     
     @objc private func sendMessage() {
-        if let text = textView.text, !text.trimmingCharacters(in: .whitespaces).isEmpty {
-            let message = MessageViewModel(id: String(0), image: "https://www.shareicon.net/data/128x128/2015/06/22/58079_smith_512x512.png", incoming: false, message: text, date: Date().toString(time: .short))
-            chatTableView.messages.append(message)
-            CoreDataService.shared.saveData(message: message)
-            
-            Task {
-                try await Task.sleep(nanoseconds: 100_000_000)
-                chatTableView.scrollToBottom(isAnimated: false)
-            }
+        guard let text = textView.text, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        
+        let message = MessageViewModel(id: String(0), image: "https://www.shareicon.net/data/128x128/2015/06/22/58079_smith_512x512.png", incoming: false, message: text, date: Date().toString(time: .short))
+        chatTableView.messages.append(message)
+        CoreDataService.shared.saveData(message: message)
+        
+        Task {
+            try await Task.sleep(nanoseconds: 100_000_000)
+            chatTableView.scrollToBottom(isAnimated: false)
         }
         textView.text = ""
         textView.resignFirstResponder()
     }
-    
     
     //MARK: - MessageDetailViewProtocol
     
