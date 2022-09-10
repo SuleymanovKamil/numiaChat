@@ -19,11 +19,17 @@ final class MessageDetailViewController: UIViewController {
     
     //MARK: - Properties
     
-    var index: Int?
-    var message: MessageViewModel? {
-        didSet {
-            setupContent()
-        }
+    var index: Int
+    var message: MessageViewModel
+    
+    init(index: Int, message: MessageViewModel) {
+        self.index = index
+        self.message = message
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Views
@@ -82,6 +88,7 @@ final class MessageDetailViewController: UIViewController {
         super.viewDidLoad()
         setupInterface()
         setupConstraints()
+        setupContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -119,10 +126,6 @@ final class MessageDetailViewController: UIViewController {
     }
     
     private func setupContent() {
-        guard let message = message else {
-            return
-        }
-        
         messageLabel.text = message.message
         dateLabel.text = message.date
         avatarImageView.loadFrom(URLAddress: message.image ?? "")
@@ -131,10 +134,6 @@ final class MessageDetailViewController: UIViewController {
     //MARK: - Actions
     
     @objc private func deleteButtonAction () {
-        guard let index = index else {
-            return
-        }
-        
         delegate?.deleteMessage(at: index)
         Router.shared.pop(animated: true)
     }

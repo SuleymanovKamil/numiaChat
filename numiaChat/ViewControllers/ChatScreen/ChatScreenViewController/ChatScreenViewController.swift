@@ -196,7 +196,6 @@ extension ChatScreenViewController: UITextViewDelegate {
             chatTableView.scrollToBottom(isAnimated: false)
         }
     }
-    
 }
 
 //MARK: - Keyboard Notifications

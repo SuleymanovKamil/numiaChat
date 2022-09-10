@@ -47,10 +47,8 @@ final class Router: RouterProtocol {
     }
     
     func openMessageDetailScreen(with message: MessageViewModel, at index: Int, delegate: MessageDetailViewProtocol) {
-        let messageDetailVC = MessageDetailViewController()
+        let messageDetailVC = MessageDetailViewController(index: index, message: message)
         messageDetailVC.delegate = delegate
-        messageDetailVC.index = index
-        messageDetailVC.message = message
         navigationController.pushViewController(messageDetailVC, animated: true)
     }
     
