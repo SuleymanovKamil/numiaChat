@@ -24,13 +24,13 @@ final class Router: RouterProtocol {
     // MARK: - Properties
     
     let navigationController = UINavigationController()
-
+    
     // MARK: - Pop
     
     func pop(animated: Bool) {
         navigationController.popViewController(animated: animated)
     }
-  
+    
     // MARK: - Dismiss
     
     func dismiss() {
@@ -53,5 +53,5 @@ final class Router: RouterProtocol {
         messageDetailVC.message = message
         navigationController.pushViewController(messageDetailVC, animated: true)
     }
-
+    
 }

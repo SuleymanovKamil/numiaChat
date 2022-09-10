@@ -308,8 +308,8 @@
 		6B84406F28C8FD80006EF39B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6B59F45528CB87B600399805 /* Message Detail */,
 				6B84407028C8FD9B006EF39B /* ChatScreen */,
+				6B59F45528CB87B600399805 /* Message Detail */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

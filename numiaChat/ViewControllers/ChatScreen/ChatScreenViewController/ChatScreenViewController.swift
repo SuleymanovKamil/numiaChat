@@ -154,9 +154,8 @@ class ChatScreenViewController: UIViewController {
 extension ChatScreenViewController: ChatScreen {
     func updateView(_ messages: [String]) async {
         var messagesArray: [MessageViewModel] = []
-        for index in 0..<messages.count {
-            messagesArray.append(MessageViewModel(id: String(index), image: "https://cdn1.iconfinder.com/data/icons/diversity-avatars-volume-1-heads/64/matrix-neo-man-white-512.png", incoming: true, message:  messages[index], date: Date().toString(time: .short)))
-        }
+        messages.indices.forEach {
+            messagesArray.append(MessageViewModel(id: String($0), image: "https://cdn1.iconfinder.com/data/icons/diversity-avatars-volume-1-heads/64/matrix-neo-man-white-512.png", incoming: true, message: messages[$0], date: Date().toString(time: .short)))}
         
         if let savedMessages = await presenter?.fetchSavedMessages() {
             messagesArray.append(contentsOf: savedMessages)
@@ -164,11 +163,9 @@ extension ChatScreenViewController: ChatScreen {
         }
         
         chatTableView.messages = messagesArray.sorted(by: { Int($0.id)! > Int($1.id)! })
-        
         guard chatTableView.messages.isEmpty == false, messages.count <= 20 else {
             return
         }
-        
         
         chatTableView.scrollToBottom(isAnimated: false)
     }
@@ -183,8 +180,8 @@ extension ChatScreenViewController: ChatTableViewProtocol {
         }
     }
     
-    func showMessageDetail(with message: MessageViewModel, at: Int) {
-        presenter?.showMessageDetailScreen(message, at: at)
+    func showMessageDetail(with message: MessageViewModel, at index: Int) {
+        presenter?.showMessageDetailScreen(message, at: index)
     }
 }
 
